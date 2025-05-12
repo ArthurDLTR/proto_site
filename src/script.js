@@ -19,11 +19,11 @@ const scene = new THREE.Scene()
 // Texture loader
 const textureLoader = new THREE.TextureLoader()
 // load the matcap texture
-const matcap = textureLoader.load('matcap.png')
+//const matcap = textureLoader.load('matcap.png')
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, .1, 100)
-camera.position.set(-1, 0, 0)
+camera.position.z = 3
 scene.add(camera)
 
 // Update sizes and camera when resizing the window
@@ -43,13 +43,12 @@ window.addEventListener('resize', () => {
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
-controls.target.set(0, 1, 0)
 controls.enableDamping = true
 
 // Cube de test
 const cube = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({color: 'blue'})
+    new THREE.MeshBasicMaterial()
 )
 
 scene.add(cube)
