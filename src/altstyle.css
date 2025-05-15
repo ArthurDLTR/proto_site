@@ -73,3 +73,12 @@ body {
     background: #383838;
     min-width: 100px;
 }
+
+td {
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+img {
+    max-width: 1000px;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0">
+        <title>Import prix d'achat fournisseur dans Dolibarr</title>
+        <link rel="stylesheet" href="./altstyle.css">
+        <script src="altscript.js"></script>
+    </head>
+    <body>
+        <a href="index.html" class="home-link">ECID SAS Chalicarne</a>
+        <div class="lightdarkbutton">
+            <div class="container">
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="content">
+            <h1 class="title">Import des prix fournisseurs dans Dolibarr</h1>
+            <p class="text">Le protocole doit être réalisé avec LibreOffice Calc.</p>
+
+            <!-- Liaison Dolibarr et réf fournisseurs -->
+            <h2 class="sub-title">Liaison entre réf Dolibarr et réf fournisseurs</h2>
+            <p class="text">Pour importer les prix, on utilise une feuille de calcul (Fichier calc) qui associe les réfs fournisseurs automatiquement à celles de Dolibarr.</p>
+            <p class="text">Le fichier à télécharger et utiliser est juste ici : <a href="/static/doc/tab_ref_fourn.ods">Fichier de liaison</a></p>
+            <p class="text">La première feuille Table_ref n’est pas à utiliser, elle sert uniquement de référence pour la liaison.</p>
+            <p class="text">Il faut taper les informations dans la deuxième feuille <b>Feuil1</b>.</p>
+            <p class="text">La deuxième ressemble à la capture d’écran ci-dessous:</p>
+            <img src="/static/img/import_fourn/1.png" alt="Exemple de feuille de calcul">
+            <p class="text">Le but est d’utiliser le fichier donné par le fournisseur pour importer les prix dans Dolibarr.</p>
+            <p class="text">Le fichier du fournisseur est de la même forme sans les 4 premières colonnes.</p>
+            <p class="text">Les colonnes <b>Ref fournisseur</b>, <b>Qté achat min.</b>, <b>Taux TVA</b>, <b>Prix quantité min.</b> et <b>Prix unitaire HT</b> sont à remplir obligatoirement. Avec ces données, le fichier peut faire le lien tout seul avec la table de référence.</p>
+            <br>
+            <p class="text">Si comme ci-dessous, la liaison ne se fait pas automatiquement, il faut étendre la formule qui se trouve dans les cases déjà remplies.</p>
+            <img src="/static/img/import_fourn/2.png" alt="Formule non étendue">
+            <p class="text">Pour étendre la formule, il faut sélectionner les 4 cases et double-cliquer sur le petit carré en bas à droite de la sélection.</p>
+            <img src="/static/img/import_fourn/3.png" alt="Exemple extension formule">
+            <p class="text">Une fois les liaisons faites, il faut sélectionner l’intégralité du fichier, le copier (CTRL+C ou clic droit puis copier) puis coller le tout dans un fichier vierge(avec CTRL+MAJ+V ou clic droit →options de collage →Valeurs) pour copier coller le contenu des cellules sans les formules avec le nom des colonnes de préférence.</p>
+            <p class="text">Si le copier coller du tableau est fait avec un copier coller classique, Dolibarr n’acceptera pas l’import. </p>
+            <p class="text">Il ne doit y avoir qu’une seule feuille dans le fichier Excel sinon Dolibarr n’acceptera pas l’import. </p>
+            <p class="text">Une relecture du fichier s’impose car il faut retirer toutes les lignes où il est marqué “Pas de réf” car cela signifie que le produit n’existe pas dans Dolibarr et donc que l’import ne pourra pas se faire si cette ligne reste. Il est également possible que certaines réf ne soient pas enregistrées correctement dans Dolibarr</p>
+
+            <!-- Problèmes éventuellement rencontrés-->
+            <h2 class="sub-title">Possibles problèmes rencontrés</h2>
+            <p class="text">Si jamais les cases avec les formules sont effacées et non récupérables, voici les formules :</p>
+            <table class="table">
+                <tr class="table-row-title">
+                    <th>Réf produit</th>
+                    <th>ID produit</th>
+                    <th>ID fournisseur</th>
+                    <th>Réf fournisseur modifiée</th>
+                </tr>
+                <tr>
+                    <td>=RECHERCHEV(D2;$Table_ref.$A$2:$Table_ref.$D$7596;3;0)</td>
+                    <td>=RECHERCHEV(D2;$Table_ref.$A$2:$Table_ref.$D$7596;2;0)</td>
+                    <td>=RECHERCHEV(D2;$Table_ref.$A$2:$Table_ref.$D$7596;4;0)</td>
+                    <td>=SUBSTITUE(SUBSTITUE(E2; "."; ""); "/"; "_")</td>
+                </tr>
+            </table>
+
+            <!-- Import du fichier dans Dolibarr -->
+            <h2 class="sub-title">Import dans Dolibarr de la feuille de calcul</h2>
+            <p class="text">Pour l’import, il faut aller dans l’onglet <b>Outils</b> de Dolibarr, puis dans <b>Nouvel Import</b> puis choisir <b>Prix fournisseurs</b> :</p>
+            <img src="/static/img/import_fourn/4.png" alt="Ou faire l'import">
+            <p class="text">Ensuite, il faut choisir Excel, choisir le fichier avec les produits d’achat, l’envoyer puis le choisir.</p>
+            <p class="text">Il faut choisir le profil d’import <b>import-prix-achat</b> qui va choisir les bons champs pour chaque colonne :</p>
+            <img src="/static/img/import_fourn/5.png" alt="Correspondance des champs">
+            
+        </div>
+    </body>
+</html>
