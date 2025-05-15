@@ -64,7 +64,22 @@
             <p class="text">Ensuite, il faut choisir Excel, choisir le fichier avec les produits d’achat, l’envoyer puis le choisir.</p>
             <p class="text">Il faut choisir le profil d’import <b>import-prix-achat</b> qui va choisir les bons champs pour chaque colonne :</p>
             <img src="/static/img/import_fourn/5.png" alt="Correspondance des champs">
-            
+            <p class="text">Une fois à l’étape 5, il faut choisir une clé à utiliser qui est la Réf. produit fournisseur sinon aucun prix ne s’importera.</p>
+            <img src="/static/img/import_fourn/6.png" alt="Clés à choisir">
+            <p class="text">Une fois que tout ça est fait, on peut faire lancer la simulation d’import.</p>
+            <p class="text">Si la simulation se passe bien, on obtient un message qui indique qu’il n’y a pas d’erreur et on peut importer les données.</p>
+            <img src="/static/img/import_fourn/7.png" alt="Résultats quand l'import fonctionne">
+
+            <!-- Problèmes qui peuvent être rencontrés -->
+            <h2 class="sub-title">Possibles erreurs lors de l’import</h2>
+            <p class="text">Si Dolibarr indique ‘Duplicate entry’, cela signifie qu’il n’y a pas de clé choisie ou que ce n’est pas la bonne. Il faut bien choisir Réf. Produit fournisseur.</p>
+            <img src="/static/img/import_fourn/8.png" alt="Erreur lors de l'import, problème de clé">
+            <p class="text">Si une ligne est vide, Dolibarr le considère comme une erreur et empêche l’import, il faut soit choisir une ligne de fin juste au dessus de la clé, soit les supprimer à la main dans le fichier Excel s’il s’agit de ligne au milieu du fichier.</p>
+            <img src="/static/img/import_fourn/9.png" alt="Lignes vides dans le fichier d'import">
+
+            <h2 class="sub-title">Bonus</h2>
+            <p class="text">Pour mettre à jour les produits dans table_ref, il faut exporter les données avec Dolibarr dans Produits avec les mêmes champs que ceux déjà existants dans le fichier Excel.</p>
         </div>
+        <p class="text">Téléchargez ce document au format PDF : <a href="../static/doc/import_prix_achat.pdf" class="link">PDF</a></p>
     </body>
 </html>
