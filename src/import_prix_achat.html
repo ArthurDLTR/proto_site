@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0">
+        <title>Site pour protocole d'ECID</title>
+        <link rel="stylesheet" href="./altstyle.css">
+        <script src="altscript.js"></script>
+    </head>
+    <body>  
+        <a href="index.html" class="home-link">ECID SAS Chalicarne</a>
+        <div class="lightdarkbutton">
+            <div class="container">
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="content">
+            <h1 class="title">Import des prix d'achat (partie fournisseur)</h1>
+
+            <p class="text">Le but de ce protocole est de vous aider à nous transmettre un tableur Excel (.xlsx) ou Calc (.odt) nous permettant d’intégrer directement vos prix dans notre système de gestion.<br>
+            <p class="text">Le mieux est de nous transmettre un document avec une seule feuille plutôt qu’un document contenant plusieurs feuilles.</p>
+
+            <!-- Critères -->
+            <h2 class="sub-title">Les critères de saisies des données à respecter sont :</h2>
+            <p class="text">La référence du produit peut inclure tout type de caractère.</p>
+            <p class="text">La quantité d’achat minimum doit être un entier (pas de nombres à virgule).</p>
+            <p class="text">Le taux de TVA doit être saisi sans caractères spéciaux, une TVA de 5% sera indiqué par “5”. </p>
+            <p class="text">Les prix dans les colonnes <b>Prix pour la quantité d’achat HT</b> et <b>prix unitaire HT</b> doivent être saisis avec des points et non pas des virgules. </p>
+            <p class="text">La remise doit être saisie sans caractères spéciaux, une remise de 20% sera indiqué par “20” dans la colonne <b>Remise pour cette quantité</b>.</p>
+            
+            <!-- Tableaux explicatifs -->
+            <h2 class="sub-title">Les types de tableau selon le type de marchandise</h2>
+            <p class="text">Afin de faciliter et d’automatiser au maximum l’intégration de ces prix dans notre logiciel de gestion, le document peut être de deux formes différentes :</p>
+            <ol class="list">
+                <li class="item-list">
+                    <p class="text">Si vos produits sont vendus à l’unité (le prix unitaire correspond à 1 bidon de 5L), le document devra se présenter sous cette forme:</p>
+                    <table class="table">
+                        <tr class="table-row-title">
+                            <th>Réf. produit fournisseur</th>
+                            <th>Qté achat min.</th>
+                            <th>Taux TVA</th>
+                            <th>Prix pour la quantité d'achat min.</th>
+                            <th>Prix unitaire HT</th>
+                            <th>Remise pour cette quantité</th>
+                        </tr>
+                        <tr>
+                            <td>EXABC1234</td>
+                            <td>1</td>
+                            <td>20</td>
+                            <td>10</td>
+                            <td>10</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>EXABC1234</td>
+                            <td>5</td>
+                            <td>20</td>
+                            <td>50</td>
+                            <td>50</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>XYZ888</td>
+                            <td>1</td>
+                            <td>5</td>
+                            <td>2.5</td>
+                            <td>2.5</td>
+                            <td>0</td>
+                        </tr>
+                    </table>
+                    <p class="text">Il existe sur ce lien un exemple de feuille de calcul qui dispose de la même configuration que le tableau juste au-dessus que vous pouvez télécharger : <a class="link" href="https://docs.google.com/spreadsheets/d/1CvS4RN93xvyDfgcLtdAOOOf4X2aCdS0hBdFaeOmqggo/edit?usp=sharing">lien vers le document</a>.</p>
+                </li>
+                <li class="item-list">
+                    <p class="text">Si vos produits sont vendus par carton ou autre conditionnement avec plusieurs exemplaires du produit (EXABC1234 est un carton contenant 4 bidons de 5L ou un sachet de 10 pièces d’un produit), le document devra se présenter sous cette forme:</p>
+                    <table class="table">
+                        <tr class="table-row-title">
+                            <th>Réf. produit fournisseur</th>
+                            <th>Qté achat min.</th>
+                            <th>Taux TVA</th>
+                            <th>Prix pour la quantité d'achat min.</th>
+                            <th>Prix unitaire HT</th>
+                            <th>Qté d'UV par conditionnement</th>
+                            <th>Remise pour cette quantité</th>
+                        </tr>
+                        <tr>
+                            <td>EXABC1234</td>
+                            <td>1</td>
+                            <td>20</td>
+                            <td>10</td>
+                            <td>10</td>
+                            <td>4</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>EXABC1234</td>
+                            <td>5</td>
+                            <td>20</td>
+                            <td>50</td>
+                            <td>50</td>
+                            <td>4</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>XYZ888</td>
+                            <td>1</td>
+                            <td>5</td>
+                            <td>2.5</td>
+                            <td>2.5</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                    </table>
+                </li>
+                <p class="text">Il existe sur ce lien un exemple de feuille de calcul qui dispose de la même configuration que le tableau juste au-dessus que vous pouvez télécharger : <a class="link" href="https://docs.google.com/spreadsheets/d/1L9Q1GjDNuhwoxHJlxvngHZ7zROTiTwhe5_yVhAUoo2I/edit?usp=sharing">lien vers le document</a>.</p>
+            </ol>
+
+            <!-- Cas spéciaux avec tableaux d'exemple-->
+            <h2 class="sub-title">Cas spéciaux</h2>
+            <p class="text">Dans le cas où vos produits ont plusieurs prix fixés selon la quantité commandée, il faut saisir plusieurs lignes qui correspondent à chacun de ces prix et préciser la quantité minimum pour laquelle la réduction s’applique dans la colonne <b>Qté achat min.</b> et le prix saisi dans la colonne <b>Prix pour la quantité d’achat HT</b> doit correspondre au prix du lot pour cette quantité minimum comme c’est le cas dans les exemples ci-dessus.</p>
+            <p class="text">Si des réductions s’appliquent selon le montant de la commande, il n’y a pas besoin de le renseigner sur le document.</p>
+            <p class="text">Si le produit existe dans plusieurs tailles (pour les vêtements, gants, etc…), il faut renseigner une ligne par taille disponible en ajoutant à la fin de la référence la taille concernée.</p>
+            <table class="table">
+                <tr class="table-row-title">
+                    <th>Réf. produit fournisseur</th>
+                    <th>Qté achat min.</th>
+                    <th>Taux TVA</th>
+                    <th>Prix pour la quantité d'achat min.</th>
+                    <th>Prix unitaire HT</th>
+                    <th>Qté par unité de vente</th>
+                    <th>Remise pour cette quantité</th>
+                </tr>
+                <tr>
+                    <td>EXABC123-S</td>
+                    <td>1</td>
+                    <td>20</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>EXABC123-M</td>
+                    <td>1</td>
+                    <td>20</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>EXABC123-L</td>
+                    <td>1</td>
+                    <td>20</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </div>
+        <p class="text">Téléchargez ce document au format PDF : <a href="../static/doc/import_achat_fourn.pdf" class="link">PDF</a></p>
+    </body>
+</html>
