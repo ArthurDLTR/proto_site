@@ -5,8 +5,11 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/Addons.js';
 import typefaceFont from 'three/examples/fonts/helvetiker_regular.typeface.json'
+import * as CANNON from 'cannon-es' 
 
 const gui = new GUI()
+
+gui.hide()
 
 // Sizes
 const sizes = {
@@ -35,12 +38,31 @@ matcap.colorSpace = THREE.SRGBColorSpace
 
 const matcapMat = new THREE.MeshMatcapMaterial({matcap: matcap})
 
+/**
+ * Physics
+ */
+const world = new CANNON.World()
+world.gravity.set(0, -2, 0)
+world.broadphase = new CANNON.SAPBroadphase(world)
+world.allowSleep = true
+// Materials for physic elements
+const defaultMaterial = new CANNON.Material('default')
+const contactMat = new CANNON.ContactMaterial(
+    defaultMaterial,
+    defaultMaterial,
+    {
+        friction: 0.1,
+        restitution: 0.7
+    }
+)
+world.addContactMaterial(contactMat)
+
 // Load the font
 fontLoader.load('fonts/helvetiker_regular.typeface.json', function(font){
     const textGeo = new TextGeometry("ECID SAS Chalicarne", {
         font: font,
-        size: 0.5,
-        depth: .2,
+        size: 3,
+        depth: .8,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: .05,
@@ -51,42 +73,140 @@ fontLoader.load('fonts/helvetiker_regular.typeface.json', function(font){
     const text = new THREE.Mesh(textGeo, matcapMat)
     textGeo.computeBoundingBox()
     textGeo.center()
-    textGeo.translate(0, 0, -2)
+    textGeo.translate(0, 1.5, -2)
     scene.add(text) 
+
+    // Physics for the text
+    const textShape = new CANNON.Box(new CANNON.Vec3(textGeo.width, textGeo.height, textGeo.depth))
+    const textBody = new CANNON.Body()
+    textBody.addShape(textShape)
+    world.addBody(textBody)
 })
 
+
+// Floor
+const floorShape = new CANNON.Plane()
+const floorBody = new CANNON.Body()
+floorBody.addShape(floorShape)
+floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1, 0, 0), Math.PI * .5)
+world.addBody(floorBody)
+
+/**
+ * Objects
+ */
+
+// Floor
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshMatcapMaterial({ matcap }))
+floor.rotation.x = - Math.PI * .5
+scene.add(floor)
+
 const array = []
+const sphereGeo = new THREE.SphereGeometry(.5, 16, 16)
+const boxGeo = new THREE.BoxGeometry(1, 1, 1)
+const torusGeo = new THREE.TorusGeometry(.2, .1, 16)
+
+/**
+ * Functions to create objects
+ */
+const createSphere = (radius, position) => {
+    // Threejs mesh
+    const mesh = new THREE.Mesh(sphereGeo, matcapMat)
+    mesh.scale.set(radius, radius, radius)
+    mesh.position.copy(position)
+    scene.add(mesh)
+
+    // Cannonjs body
+    const shape = new CANNON.Sphere(radius)
+    const body = new CANNON.Body({
+        mass: 1,
+        position : new CANNON.Vec3(0, 3, 0),
+        shape: shape,
+        material: defaultMaterial
+    })
+    body.position.copy(position)
+    world.addBody(body)
+
+    // Save the object
+    array.push({
+        mesh,
+        body
+    })
+}
+
+const createTor = (radius, position) => {
+    // Threejs mesh
+    const mesh = new THREE.Mesh(torusGeo, matcapMat)
+    mesh.scale.set(radius, radius, radius)
+    mesh.position.copy(position)
+    scene.add(mesh)
+
+    // Cannonjs body
+    const shape = CANNON.Trimesh.createTorus(radius, .1, 16)
+    const body = new CANNON.Body({
+        mass: 1, 
+        position : new CANNON.Vec3(0, 3, 0),
+        shape,
+        material: defaultMaterial
+    })
+    body.position.copy(position)
+    world.addBody(body)
+
+    // Save the object
+    array.push({
+        mesh,
+        body
+    })
+}
+
+const createBox = (radius, position) => {
+    // Threejs mesh
+    const mesh = new THREE.Mesh(boxGeo, matcapMat)
+    mesh.scale.set(radius, radius, radius)
+    mesh.position.copy(position)
+    scene.add(mesh)
+
+    // Cannonjs body
+    const shape = new CANNON.Box(new CANNON.Vec3(radius / 2, radius / 2, radius / 2)) // Pour définir la taille, on utilise un half-extent (un vecteur du centre du cube jusqu'à un coin du cube)
+    const body = new CANNON.Body({
+        mass: 1,
+        position : new CANNON.Vec3(0, 3, 0),
+        shape: shape,
+        material: defaultMaterial
+    })
+    body.position.copy(position)
+    world.addBody(body)
+
+    // Save the object
+    array.push({
+        mesh,
+        body
+    })
+}
+
 
 // Random objects everywhere
 for(let i = 0; i < sizes.number; i++){
-    let geoRand = null
     const type = Math.floor(Math.random() * 3);
     switch (type){
         case 0:
-            geoRand = new THREE.SphereGeometry(.5, 16, 16)
+            // create Sphere
+            createSphere(Math.random() * 2 + .6, new THREE.Vector3((Math.random() - .5) * 20, (Math.random()) * 20 + 5, (Math.random() - .5) * 20))
             break
         case 1:
-            geoRand = new THREE.TorusKnotGeometry(.2, .1)
+            // create Box
+            createBox(Math.random() * 2 + .6, new THREE.Vector3((Math.random() - .5) * 20, (Math.random()) * 20 + 5, (Math.random() - .5) * 20))
             break
         case 2:
-            geoRand = new THREE.TorusGeometry(.2, .1, 16)
+            // Create torus
+            createTor(Math.random() * 2 + .6, new THREE.Vector3((Math.random() - .5) * 20, (Math.random()) * 20 + 5, (Math.random() - .5) * 20))
+            break;
     }
-    const mesh = new THREE.Mesh(geoRand, matcapMat)
-    mesh.position.set(
-        (Math.random() - .5) * 20,
-        (Math.random() - .5) * 20,
-        (Math.random() - .5) * 20
-    )
-    mesh.rotation.set(Math.random()* Math.PI, Math.random()* Math.PI, Math.random()* Math.PI)
-    const scaleRand = Math.random() + .2
-    mesh.scale.set(scaleRand, scaleRand, scaleRand)
-    scene.add(mesh)
-    array.push(mesh)
 }
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, .1, 100)
-camera.position.z = 3
+camera.position.z = 20
+camera.position.y = 5
 scene.add(camera)
 
 // Update sizes and camera when resizing the window
@@ -108,14 +228,10 @@ window.addEventListener('resize', () => {
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 
-// Cube de test
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshMatcapMaterial({matcap: matcap})
-)
-cube.position.set(1, -1 ,0)
+/**
+ * Protocole links
+ */
 
-scene.add(cube)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -128,17 +244,21 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // Clock
 const clock = new THREE.Clock()
+let oldElapsedTime = 0
 
 // Refresh function
 const tick = () => {
     const elapsedTime = clock.getElapsedTime()
-    cube.lookAt(camera.position)
+    const deltaTime = elapsedTime - oldElapsedTime
+    oldElapsedTime = elapsedTime
 
-    // Updating rotation of the random objects
-    array.forEach((m) => {
-        m.rotation.set(Math.PI+elapsedTime, Math.PI+elapsedTime, Math.PI+elapsedTime)
-    })
-    
+    world.step(1/60, deltaTime, 3)
+    // Updating position of the random objects with physics
+    for(const m of array){
+        m.mesh.position.copy(m.body.position)
+        m.mesh.quaternion.copy(m.body.quaternion)   
+    }
+
     // Updating the controls
     controls.update()
 
