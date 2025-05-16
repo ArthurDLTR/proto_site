@@ -12,7 +12,47 @@ body {
 }
 
 .home-link {
-    max-width: 200px;
+    width: 250px;
+    height: 1000px;
+    position: fixed;
+    top: 2px;
+    left: -195px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 10px;
+    transition: all ease-in-out 400ms;
+}
+/* .home-link:hover {
+    transform: translateX(205px); 
+}
+    */
+
+.home-link > a{
+    color: white;
+    margin-top: 20px;
+    margin-right: 55px;
+    margin-left: 15px;
+}
+
+.burger {
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-top: 5px;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+span {
+    height: 6px;
+    width: 50px;
+    border-radius: 3px;
+    margin-top: 8px;
+    background: rgb(116, 116, 116);
+    transition: transform .8s ease-in-out;
 }
 
 .lightdarkbutton {
@@ -42,6 +82,7 @@ body {
     background: rgb(83, 82, 83);
     border-radius: 50%;
     margin-left: 2.5px;
+    transition: margin-left .5s ease;
 }
 
 .content {

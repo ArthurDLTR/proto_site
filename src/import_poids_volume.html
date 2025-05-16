@@ -8,7 +8,17 @@
         <script src="altscript.js"></script>
     </head>
     <body>  
-        <a href="index.html" class="home-link">ECID SAS Chalicarne</a>
+        <div class="home-link">
+            <div class="burger">
+                <span class="first"></span>
+                <span class="second"></span>
+                <span class="third"></span>
+            </div>
+            <a href="/src/index.html">ECID SAS Chalicarne</a>
+            <a href="/src/import_poids_volume.html">Protocole poids et volume</a>
+            <a href="/src/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
+            <a href="/src/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
+        </div>
         <div class="lightdarkbutton">
             <div class="container">
                 <div class="circle"></div>
@@ -20,8 +30,8 @@
 
             <!-- Liaison Dolibarr et réf fournisseurs -->
             <h2 class="sub-title">Liaison entre Dolibarr et réf fournisseurs</h2>
-            <p class="text">Pour importer les poids et volume, on utilise un fichier excel qui associe les réfs fournisseurs automatiquement à celles de Dolibarr.</p>
-            <p class="text">Le fichier à télécharger et utiliser est juste ici : <a href="/static/doc/tab_volume_poids.ods">PDF</a></p>
+            <p class="text">Pour importer les poids et volume, on utilise un fichier de type feuille de calcul qui associe les réfs fournisseurs automatiquement à celles de Dolibarr.</p>
+            <p class="text">Le fichier à télécharger et utiliser est juste ici : <a href="/static/doc/tab_volume_poids.ods">Fichier Calc</a></p>
             <p class="text">Seule la <b>Feuille1</b> est à remplir, la feuille <b>tab_ref</b> sert uniquement de référence pour retrouver les produits déjà enregistrés dans Dolibarr.</p>
             <img src="/static/img/import_poids_volume/1.png" alt="Exemple de feuille remplie">
             <p class="text">Les 5 premières colonnes correspondent aux valeurs récupérées automatiquement donc pas besoin de modifier ses colonnes à part pour étendre la formule qu’elles contiennent aux cases en-dessous.</p>
