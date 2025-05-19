@@ -14,12 +14,12 @@
                 <span class="second"></span>
                 <span class="third"></span>
             </div>
-            <a href="/src/index.html">ECID SAS Chalicarne</a>
-            <a href="/src/import_poids_volume.html">Protocole poids et volume</a>
-            <a href="/src/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
-            <a href="/src/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
-            <a href="/src/import_regles_remise.html">Protocole import règles de remise dans Dolibarr</a>
-            <a href="/src/inventaire_debut_annee.html">Inventaire de début d'année</a>
+            <a href="/index.html">ECID SAS Chalicarne</a>
+            <a href="/import_poids_volume.html">Protocole poids et volume</a>
+            <a href="/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
+            <a href="/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
+            <a href="/import_regles_remise.html">Protocole import règles de remise dans Dolibarr</a>
+            <a href="/inventaire_debut_annee.html">Inventaire de début d'année</a>
         </div>
         <div class="lightdarkbutton">
             <div class="container">
@@ -33,19 +33,19 @@
             <!-- Liaison Dolibarr et réf fournisseurs -->
             <h2 class="sub-title">Liaison entre réf Dolibarr et réf fournisseurs</h2>
             <p class="text">Pour importer les prix, on utilise une feuille de calcul (Fichier calc) qui associe les réfs fournisseurs automatiquement à celles de Dolibarr.</p>
-            <p class="text">Le fichier à télécharger et utiliser est juste ici : <a href="/static/doc/tab_ref_fourn.ods">Fichier de liaison</a></p>
+            <p class="text">Le fichier à télécharger et utiliser est juste ici : <a href="/doc/tab_ref_fourn.ods">Fichier de liaison</a></p>
             <p class="text">La première feuille Table_ref n’est pas à utiliser, elle sert uniquement de référence pour la liaison.</p>
             <p class="text">Il faut taper les informations dans la deuxième feuille <b>Feuil1</b>.</p>
             <p class="text">La deuxième ressemble à la capture d’écran ci-dessous:</p>
-            <img src="/static/img/import_fourn/1.png" alt="Exemple de feuille de calcul">
+            <img src="/img/import_fourn/1.png" alt="Exemple de feuille de calcul">
             <p class="text">Le but est d’utiliser le fichier donné par le fournisseur pour importer les prix dans Dolibarr.</p>
             <p class="text">Le fichier du fournisseur est de la même forme sans les 4 premières colonnes.</p>
             <p class="text">Les colonnes <b>Ref fournisseur</b>, <b>Qté achat min.</b>, <b>Taux TVA</b>, <b>Prix quantité min.</b> et <b>Prix unitaire HT</b> sont à remplir obligatoirement. Avec ces données, le fichier peut faire le lien tout seul avec la table de référence.</p>
             <br>
             <p class="text">Si comme ci-dessous, la liaison ne se fait pas automatiquement, il faut étendre la formule qui se trouve dans les cases déjà remplies.</p>
-            <img src="/static/img/import_fourn/2.png" alt="Formule non étendue">
+            <img src="/img/import_fourn/2.png" alt="Formule non étendue">
             <p class="text">Pour étendre la formule, il faut sélectionner les 4 cases et double-cliquer sur le petit carré en bas à droite de la sélection.</p>
-            <img src="/static/img/import_fourn/3.png" alt="Exemple extension formule">
+            <img src="/img/import_fourn/3.png" alt="Exemple extension formule">
             <p class="text">Une fois les liaisons faites, il faut sélectionner l’intégralité du fichier, le copier (<kbd>CTRL</kbd> + <kbd>C</kbd> ou clic droit puis copier) puis coller le tout dans un fichier vierge(avec <kbd>CTRL</kbd> + <kbd>MAJ</kbd> + <kbd>V</kbd> ou clic droit →options de collage →Valeurs) pour copier coller le contenu des cellules sans les formules avec le nom des colonnes de préférence.</p>
             <p class="text">Si le copier coller du tableau est fait avec un copier coller classique, Dolibarr n’acceptera pas l’import. </p>
             <p class="text">Il ne doit y avoir qu’une seule feuille dans le fichier Excel sinon Dolibarr n’acceptera pas l’import. </p>
@@ -72,26 +72,26 @@
             <!-- Import du fichier dans Dolibarr -->
             <h2 class="sub-title">Import dans Dolibarr de la feuille de calcul</h2>
             <p class="text">Pour l’import, il faut aller dans l’onglet <b>Outils</b> de Dolibarr, puis dans <b>Nouvel Import</b> puis choisir <b>Prix fournisseurs</b> :</p>
-            <img src="/static/img/import_fourn/4.png" alt="Ou faire l'import">
+            <img src="/img/import_fourn/4.png" alt="Ou faire l'import">
             <p class="text">Ensuite, il faut choisir Excel, choisir le fichier avec les produits d’achat, l’envoyer puis le choisir.</p>
             <p class="text">Il faut choisir le profil d’import <b>import-prix-achat</b> qui va choisir les bons champs pour chaque colonne :</p>
-            <img src="/static/img/import_fourn/5.png" alt="Correspondance des champs">
+            <img src="/img/import_fourn/5.png" alt="Correspondance des champs">
             <p class="text">Une fois à l’étape 5, il faut choisir une clé à utiliser qui est la Réf. produit fournisseur sinon aucun prix ne s’importera.</p>
-            <img src="/static/img/import_fourn/6.png" alt="Clés à choisir">
+            <img src="/img/import_fourn/6.png" alt="Clés à choisir">
             <p class="text">Une fois que tout ça est fait, on peut faire lancer la simulation d’import.</p>
             <p class="text">Si la simulation se passe bien, on obtient un message qui indique qu’il n’y a pas d’erreur et on peut importer les données.</p>
-            <img src="/static/img/import_fourn/7.png" alt="Résultats quand l'import fonctionne">
+            <img src="/img/import_fourn/7.png" alt="Résultats quand l'import fonctionne">
 
             <!-- Problèmes qui peuvent être rencontrés -->
             <h2 class="sub-title">Possibles erreurs lors de l’import</h2>
             <p class="text">Si Dolibarr indique ‘Duplicate entry’, cela signifie qu’il n’y a pas de clé choisie ou que ce n’est pas la bonne. Il faut bien choisir Réf. Produit fournisseur.</p>
-            <img src="/static/img/import_fourn/8.png" alt="Erreur lors de l'import, problème de clé">
+            <img src="/img/import_fourn/8.png" alt="Erreur lors de l'import, problème de clé">
             <p class="text">Si une ligne est vide, Dolibarr le considère comme une erreur et empêche l’import, il faut soit choisir une ligne de fin juste au dessus de la clé, soit les supprimer à la main dans le fichier Excel s’il s’agit de ligne au milieu du fichier.</p>
-            <img src="/static/img/import_fourn/9.png" alt="Lignes vides dans le fichier d'import">
+            <img src="/img/import_fourn/9.png" alt="Lignes vides dans le fichier d'import">
 
             <h2 class="sub-title">Bonus</h2>
             <p class="text">Pour mettre à jour les produits dans table_ref, il faut exporter les données avec Dolibarr dans Produits avec les mêmes champs que ceux déjà existants dans le fichier Excel.</p>
         </div>
-        <p class="text">Téléchargez ce document au format PDF : <a href="../static/doc/import_prix_achat.pdf" class="link">PDF</a></p>
+        <p class="text">Téléchargez ce document au format PDF : <a href="/doc/import_prix_achat.pdf" class="link">PDF</a></p>
     </body>
 </html>

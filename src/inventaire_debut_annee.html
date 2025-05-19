@@ -14,12 +14,12 @@
                 <span class="second"></span>
                 <span class="third"></span>
             </div>
-            <a href="/src/index.html">ECID SAS Chalicarne</a>
-            <a href="/src/import_poids_volume.html">Protocole poids et volume</a>
-            <a href="/src/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
-            <a href="/src/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
-            <a href="/src/import_regles_remise.html">Protocole import règles de remise dans Dolibarr</a>
-            <a href="/src/inventaire_debut_annee.html">Inventaire de début d'année</a>
+            <a href="/index.html">ECID SAS Chalicarne</a>
+            <a href="/import_poids_volume.html">Protocole poids et volume</a>
+            <a href="/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
+            <a href="/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
+            <a href="/import_regles_remise.html">Protocole import règles de remise dans Dolibarr</a>
+            <a href="/inventaire_debut_annee.html">Inventaire de début d'année</a>
         </div>
         <div class="lightdarkbutton">
             <div class="container">
@@ -39,10 +39,10 @@
             <h2 class="sub-title">Infos</h2>
             <p class="text">Pour accéder à PhpMyAdmin, les liens sont dans la fiche fournisseur de INOVEA Conseil (<a href="https://ecid.dolibiz.net/societe/note.php?id=1842">lien vers la fiche</a>).</p>
             <p class="text">Toutes les morçeaux de code/requêtes ci-dessus doivent être effectuées dans l’onglet SQL de PhpMyAdmin (en haut à gauche).</p>
-            <img src="/static/img/inventaire/1.png" alt="Ou trouver l'onglet SQL">
+            <img src="/img/inventaire/1.png" alt="Ou trouver l'onglet SQL">
             <p class="text">Dans la suite, les tables sont indiquées avec un nom de cette forme “ecid_erp.llx_product”, ecid_erp correspond à la base de données que la version production utilise et llx_product est la table des produits enregistrés dans Dolibarr.</p>
             <p class="text">Si vous souhaitez faire un test pour la mise à jour du stock avant de le faire sur la version de production, le test peut être fait dans “ecid_mig” qui est la base de données de la version de pré-production. </p>
-            <img src="/static/img/inventaire/2.png" alt="BDD existantes">
+            <img src="/img/inventaire/2.png" alt="BDD existantes">
             <!-- Déroulement -->
             <h2 class="sub-title">Déroulement</h2>
             <p class="text">Le but ici est de récupérer d’abord la valeur de stock dans la table ecid_erp.llx_product, la mettre à jour en fonction du vrai stock dans le hangar puis d’importer les nouvelles valeurs dans une table ecid_erp.llx_product_tmp que l’on va créer et enfin d’utiliser cette table pour mettre à jour la valeur de reel dans ecid_erp.llx_product_stock qui est la vraie valeur du stock affichée dans Dolibarr (pour cette dernière étape, on met également à jour la valeur de stock que l’on a récupérée au début pour aligner les valeurs entre elles qui est normalement fait automatiquement par Dolibarr).</p>
@@ -64,9 +64,9 @@
             <p class="text code"><code>SELECT p.rowid, p.ref, p.label, p.stock, c_f.subprice, c_f.remise_percent FROM ecid_erp.llx_product AS p<br>JOIN ecid_erp.llx_commande_fournisseurdet AS c_f ON c_f.fk_product = p.rowid<br>JOIN ecid_erp.llx_commande_fournisseur AS c ON c_f.fk_commande = c.rowid<br>WHERE c.date_creation = (SELECT max(c_bis.date_creation) FROM ecid_erp.llx_commande_fournisseur as c_bis JOIN ecid_erp.llx_commande_fournisseurdet as cf_bis on cf_bis.fk_commande = c_bis.rowid WHERE cf_bis.fk_product = p.rowid)<br>GROUP BY p.rowid</code></p>
             <p class="text">La remise est en pourcent dans la colonne remise_percent.</p>
             <p class="text">Avec le résultat obtenu, il faut descendre jusqu’en bas de la page et aller sur “Exporter” .</p>
-            <img src="/static/img/inventaire/3.png" alt="Ou trouver Exporter">
+            <img src="/img/inventaire/3.png" alt="Ou trouver Exporter">
             <p class="text">Dans l’exportation, choisir Personnalisée pour la méthode d’exportation, choisir le format OpenDocument Spreadsheet (les autres formats peuvent créer des problèmes lors de l’export), cocher  “Afficher les noms de colonnes en première ligne” puis Exporter.</p>
-            <img src="/static/img/inventaire/4.png" alt="Personnaliser l'export">
+            <img src="/img/inventaire/4.png" alt="Personnaliser l'export">
             <p class="text">Enregistrez le fichier sous le nom donné (llx_product).</p>
 
             <!-- Vérification du stock réel -->
@@ -75,33 +75,33 @@
             <p class="text">Maintenant que tout est bon, on peut éditer la colonne stock dans Excel ou logiciel équivalent pendant l’inventaire.</p>
             <p class="text">Le mieux est d’éditer seulement la colonne stock pour faciliter l’import mais tant que la colonne rowid ne change pas, l’import devrait bien se passer.</p>
             <p class="text">A présent, il faut renommer la feuille de calcul dans le fichier (en bas à gauche sur image) sinon phpMyAdmin va refuser l’import :</p>
-            <img src="/static/img/inventaire/5.png" alt="Renommage de la feuille de calcul">
+            <img src="/img/inventaire/5.png" alt="Renommage de la feuille de calcul">
             <p class="text">Puis enregister le fichier sous le même nom que la feuille de calcul au format OpenDocument:</p>
-            <img src="/static/img/inventaire/6.png" alt="Enregistrement sous le bon nom">
+            <img src="/img/inventaire/6.png" alt="Enregistrement sous le bon nom">
 
             <!-- Import dans Dolibarr -->
             <h2 class="sub-title">Importation des données dans PhpMyAdmin</h2>
             <p class="text">Pour importer les données, il faut aller dans Import de PhpMyAdmin en étant dans la base de données de ecid_erp.</p>
-            <img src="/static/img/inventaire/7.png" alt="Dans quelle base importer">
+            <img src="/img/inventaire/7.png" alt="Dans quelle base importer">
             <p class="text">Choisir le fichier contenant les corrections de stock. Vérifier que le format est bien OpenDocument Spreadsheet, cocher “La première ligne du fichier contient le nom des colonnes” puis Importer.</p>
-            <img src="/static/img/inventaire/8.png" alt="Format du document">
+            <img src="/img/inventaire/8.png" alt="Format du document">
             <p class="text">A partir d’ici la table est créée en fonction du nom qu’il lui a été donné dans le fichier Excel, si la feuille de calcul a été appelée autrement que llx_product_tmp, il faut changer les requêtes suivantes en remplacant llx_product_tmp par le nom donné.</p>
             <p class="text">Vérifier que la nouvelle table a été créée avec le code :</p>
             <p class="text code"><code>SELECT * FROM ecid_erp.llx_product_tmp</code></p>
             <p class="text">Si tout semble bon, essayer le code suivant pour vérifier que les tables arrivent à se lier : </p>
             <p class="text code"><code>SELECT tmp.ref, tmp.label, p_s.reel AS ancien_stock, tmp.stock AS nv_stock<br>FROM ecid_erp.llx_product AS p <br>JOIN ecid_erp.llx_product_tmp AS tmp ON p.rowid = tmp.rowid<br>JOIN ecid_erp.llx_product_stock AS p_s ON p.rowid = p_s.fk_product</code></p>
             <p class="text">Le code devrait afficher la ref du produit avec son nom, son stock avant la vérif dans entrepot (0 si toutes les valeurs ont été mises à 0 avant) et le stock noté lors de l’inventaire.</p>
-            <img src="/static/img/inventaire/9.png" alt="Résultat de l'import dans la BDD">
+            <img src="/img/inventaire/9.png" alt="Résultat de l'import dans la BDD">
             <p class="text">Si le code se fait sans problème, il fait maintenant utiliser la table tmp pour mettre à jour la table des produits. Pour cela, on utilise le code suivant : </p>
             <p class="text code"><code>UPDATE ecid_erp.llx_product_stock as p_s<br>JOIN ecid_erp.llx_product_tmp AS tmp on p_s.fk_product = tmp.rowid<br>SET p_s.reel = tmp.stock;<br>UPDATE ecid_erp.llx_product as p <br>JOIN ecid_erp.llx_product_stock as p_s on p_s.fk_product = p.rowid<br>SET p.stock = p_s.reel</code></p>
             <p class="text">Pour vérifier que le stock a bien été modifié:</p>
             <p class="text code"><code>SELECT p.ref, p.label, p.stock, p_s.reel FROM ecid_erp.llx_product AS p<br>JOIN ecid_erp.llx_product_stock AS p_s ON p.rowid = p_s.fk_product</code></p>
             <p class="text">Il est normal que certains produits apparaissent avec un stock NULL lors de cette dernière requête, il s’agit de produits qui n’ont jamais été en stock ou de mouvements de stock (par exemple, les produits qui sont répertoriés mais qui n’ont jamais été vendus ou achetés).</p>
-            <img src="/static/img/inventaire/10.png" alt="Import et mise à jour du stock réussis">
+            <img src="/img/inventaire/10.png" alt="Import et mise à jour du stock réussis">
             <p class="text">Une fois que tout est bon, on peut effacer la table utilisée pour la modification:</p>
             <p class="text code">DROP TABLE ecid_erp.llx_product_tmp</p>
             <p class="text">Et voilà le stock est à jour 👑</p>
         </div>
-        <p class="text">Téléchargez ce document au format PDF : <a href="/static/doc/inventaire_debut_d_annee.pdf">PDF</a></p>
+        <p class="text">Téléchargez ce document au format PDF : <a href="/doc/inventaire_debut_d_annee.pdf">PDF</a></p>
     </body>
 </html>

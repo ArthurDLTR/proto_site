@@ -1,0 +1,3 @@
+Libellé (label);Référence projet (fk_project);Référence produit (fk_product);Référence client (fk_company);Référence pays (fk_country);Priorité (priority_rank);Type de tiers (fk_c_typent);Catégorie de produit (all_category_product);Catégorie de client (all_category_company);Remise en pourcentage (reduction);À partir de la quantité (from_quantity);Prix HT à appliquer (product_price);Montant de remise fixe (product_reduction_amount);Date de début d'application de la règle (date_from);Date de fin d'application de la règle (date_to);activation (activation)
+Prix transporteur unité;;;;;;;Uni,Autolaveuse;Transporteur;52;1;;;;;1
+Prix transporteur 10;;;;;;;Uni,Autolaveuse;Transporteur;79;10;;;;;1

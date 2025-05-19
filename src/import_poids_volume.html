@@ -14,12 +14,12 @@
                 <span class="second"></span>
                 <span class="third"></span>
             </div>
-            <a href="/src/index.html">ECID SAS Chalicarne</a>
-            <a href="/src/import_poids_volume.html">Protocole poids et volume</a>
-            <a href="/src/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
-            <a href="/src/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
-            <a href="/src/import_regles_remise.html">Protocole import règles de remise dans Dolibarr</a>
-            <a href="/src/inventaire_debut_annee.html">Inventaire de début d'année</a>
+            <a href="/index.html">ECID SAS Chalicarne</a>
+            <a href="/import_poids_volume.html">Protocole poids et volume</a>
+            <a href="/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
+            <a href="/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
+            <a href="/import_regles_remise.html">Protocole import règles de remise dans Dolibarr</a>
+            <a href="/inventaire_debut_annee.html">Inventaire de début d'année</a>
         </div>
         <div class="lightdarkbutton">
             <div class="container">
@@ -33,13 +33,13 @@
             <!-- Liaison Dolibarr et réf fournisseurs -->
             <h2 class="sub-title">Liaison entre Dolibarr et réf fournisseurs</h2>
             <p class="text">Pour importer les poids et volume, on utilise un fichier de type feuille de calcul qui associe les réfs fournisseurs automatiquement à celles de Dolibarr.</p>
-            <p class="text">Le fichier à télécharger et utiliser est juste ici : <a href="/static/doc/tab_volume_poids.ods">Fichier Calc</a></p>
+            <p class="text">Le fichier à télécharger et utiliser est juste ici : <a href="/doc/tab_volume_poids.ods">Fichier Calc</a></p>
             <p class="text">Seule la <b>Feuille1</b> est à remplir, la feuille <b>tab_ref</b> sert uniquement de référence pour retrouver les produits déjà enregistrés dans Dolibarr.</p>
-            <img src="/static/img/import_poids_volume/1.png" alt="Exemple de feuille remplie">
+            <img src="/img/import_poids_volume/1.png" alt="Exemple de feuille remplie">
             <p class="text">Les 5 premières colonnes correspondent aux valeurs récupérées automatiquement donc pas besoin de modifier ses colonnes à part pour étendre la formule qu’elles contiennent aux cases en-dessous.</p>
-            <img src="/static/img/import_poids_volume/2.png" alt="Colonnes pour les volumes et poids">
+            <img src="/img/import_poids_volume/2.png" alt="Colonnes pour les volumes et poids">
             <p class="text">Les colonnes qui concernent le poids et les dimensions de chaque produit sont celles qu’il faut le plus travailler selon les données transmises par le fournisseur.</p>
-            <img src="/static/img/import_poids_volume/3.png" alt="Données fournisseurs">
+            <img src="/img/import_poids_volume/3.png" alt="Données fournisseurs">
             <p class="text">Les 2 dernières colonnes sont les données brut venant du fichier excel du fabricant qui peuvent être copiées-collées directement. La colonne <b>Réf. fournisseur modifiée</b> sert à rendre la réf fournisseur trouvable dans les données existantes.</p>
             <p class="text">Si jamais les cases avec les formules sont effacées et non récupérables, voici les formules :</p>
             <table class="table">
@@ -64,15 +64,15 @@
             <!-- Import dans Dolibarr -->
             <h2 class="sub-title">Import dans Dolibarr du fichier Excel</h2>
             <p class="text">Pour l’import, il faut aller dans l’onglet <b>Outils</b> de Dolibarr, puis dans <b>Nouvel Import</b> puis choisir <b>Produits</b> :</p>
-            <img src="/static/img/import_poids_volume/4.png" alt="Produits">
+            <img src="/img/import_poids_volume/4.png" alt="Produits">
             <p class="text">Le profil <b>import-dimensions-produit</b> fait correspondre les bons champs pour chaque colone du fichier excel :</p>
-            <img src="/static/img/import_poids_volume/5.png" alt="Profil d'import">
+            <img src="/img/import_poids_volume/5.png" alt="Profil d'import">
             <p class="text">Avant de lancer la simulation d’import, il faut penser à choisir la clé <b>Réf</b> sinon les produits ne sont pas mis à jour et cela va créer des doublons de produits.</p>
-            <img src="/static/img/import_poids_volume/6.png" alt="Clés pour l'import">
+            <img src="/img/import_poids_volume/6.png" alt="Clés pour l'import">
             <p class="text">Une fois que tout ça est fait, on peut faire lancer la simulation d’import.</p>
             <p class="text">Si la simulation se passe bien, on obtient un message qui indique qu’il n’y a pas d’erreur et on peut importer les données.</p>
-            <img src="/static/img/import_poids_volume/7.png" alt="Simulation réussie">
+            <img src="/img/import_poids_volume/7.png" alt="Simulation réussie">
         </div>
-        <p class="text">Téléchargez ce document au format PDF : <a href="../static/doc/protocole_poids_volume.pdf" class="link">PDF</a></p>
+        <p class="text">Téléchargez ce document au format PDF : <a href="/doc/protocole_poids_volume.pdf" class="link">PDF</a></p>
     </body>
 </html>
