@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 import GUI from 'lil-gui'
-import gsap from 'gsap'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/Addons.js';
 import typefaceFont from 'three/examples/fonts/helvetiker_regular.typeface.json'
 import * as CANNON from 'cannon-es' 
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/Addons.js';
 
 const gui = new GUI()
 
@@ -17,6 +18,29 @@ const sizes = {
     height: window.innerHeight,
     number: 200
 }
+
+const contexts = [
+    {
+        link : 'import_poids_volume.html',
+        text : "Poids et volume"
+    },
+    {
+        link : 'import_prix_achat.html',
+        text : "Protocole pour les fournisseurs et leur prix de vente"
+    },
+    {
+        link : 'import_prix_fourn.html',
+        text : "Import des prix d'achat fournisseurs"
+    },
+    {
+        link : 'import_regles_remise.html',
+        text : "Import des regles de remise"
+    },
+    {
+        link : 'inventaire_debut_annee.html',
+        text : "Protocole pour l'inventaire"
+    }
+]
 // Canvas
 const canvas = document.querySelector("canvas")
 
@@ -30,14 +54,42 @@ const scene = new THREE.Scene()
 const textureLoader = new THREE.TextureLoader()
 // Font loader
 const fontLoader = new FontLoader()
+// DRACOLoader
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('/draco/')
+// GLTFLoader
+const gltfLoader = new GLTFLoader()
+gltfLoader.setDRACOLoader(dracoLoader)
 
-const text = null
+/**
+ * Textures
+ */
 // load the matcap texture
 const matcap = textureLoader.load('matcap.png')
 matcap.colorSpace = THREE.SRGBColorSpace
 
 const matcapMat = new THREE.MeshMatcapMaterial({matcap: matcap})
 
+/**
+ * Raycaster
+ */
+const raycaster = new THREE.Raycaster()
+// Mouse 
+const mouse = new THREE.Vector2()
+// Update mouse position
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX / sizes.width * 2 - 1
+    mouse.y = - (e.clientY / sizes.height) * 2 + 1
+})
+// Detect click on file
+window.addEventListener('click', () => {
+    if(currentIntersect){
+        for (const m of fileModels){
+            window.open(contexts[currentIntersect[0].index].link, '_blank')      
+        }
+    }
+})
+ 
 /**
  * Physics
  */
@@ -57,6 +109,7 @@ const contactMat = new CANNON.ContactMaterial(
 )
 world.addContactMaterial(contactMat)
 
+const texts = []
 // Load the font
 fontLoader.load('fonts/helvetiker_regular.typeface.json', function(font){
     const textGeo = new TextGeometry("ECID SAS Chalicarne", {
@@ -81,6 +134,107 @@ fontLoader.load('fonts/helvetiker_regular.typeface.json', function(font){
     const textBody = new CANNON.Body()
     textBody.addShape(textShape)
     world.addBody(textBody)
+
+    // Texts for hovering
+    let hoverGeo = new TextGeometry(contexts[0]['text'], {
+        font: font,
+        size: .6,
+        depth: .3,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: .05,
+        bevelSize: 0.02,
+        bevelOffset: 0,
+        bevelSegments: 5
+    })
+    let hover = new THREE.Mesh(hoverGeo, matcapMat)
+    hover.name = 'firstText'
+    hoverGeo.computeBoundingBox()
+    hoverGeo.center()
+    texts.push({
+        index: 0,
+        geo: hover
+    })
+
+    hoverGeo = new TextGeometry(contexts[1]['text'], {
+        font: font,
+        size: .6,
+        depth: .3,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: .05,
+        bevelSize: 0.02,
+        bevelOffset: 0,
+        bevelSegments: 5
+    })
+    hover = new THREE.Mesh(hoverGeo, matcapMat)
+    hover.name = 'secondText'
+    hoverGeo.computeBoundingBox()
+    hoverGeo.center()
+    texts.push({
+        index: 0,
+        geo: hover
+    })
+
+    hoverGeo = new TextGeometry(contexts[2]['text'], {
+        font: font,
+        size: .6,
+        depth: .3,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: .05,
+        bevelSize: 0.02,
+        bevelOffset: 0,
+        bevelSegments: 5
+    })
+    hover = new THREE.Mesh(hoverGeo, matcapMat)
+    hover.name = 'thirdText'
+    hoverGeo.computeBoundingBox()
+    hoverGeo.center()
+    texts.push({
+        index: 0,
+        geo: hover
+    })
+
+    hoverGeo = new TextGeometry(contexts[3]['text'], {
+        font: font,
+        size: .6,
+        depth: .3,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: .05,
+        bevelSize: 0.02,
+        bevelOffset: 0,
+        bevelSegments: 5
+    })
+    hover = new THREE.Mesh(hoverGeo, matcapMat)
+    hover.name = 'fourthText'
+    hoverGeo.computeBoundingBox()
+    hoverGeo.center()
+    texts.push({
+        index: 0,
+        geo: hover
+    })
+
+    hoverGeo = new TextGeometry(contexts[4]['text'], {
+        font: font,
+        size: .6,
+        depth: .3,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: .05,
+        bevelSize: 0.02,
+        bevelOffset: 0,
+        bevelSegments: 5
+    })
+    hover = new THREE.Mesh(hoverGeo, matcapMat)
+    hover.name = 'fifthText'
+    hoverGeo.computeBoundingBox()
+    hoverGeo.center()
+    texts.push({
+        index: 0,
+        geo: hover
+    })
 })
 
 
@@ -94,6 +248,44 @@ world.addBody(floorBody)
 /**
  * Objects
  */
+
+// File model
+let fileModels = []
+gltfLoader.load(
+    '/models/file.glb',
+    (gltf) => {
+        let mesh = null // Tmp mesh 
+        gltf.scene.traverse((mesh) => {
+            mesh.material = matcapMat
+        })
+        gltf.scene.translateY(7)
+        gltf.scene.scale.set(2, 2, 2)
+        // First file
+        mesh = gltf.scene.clone()
+        mesh.translateX(-7)
+        fileModels.push(mesh)
+        scene.add(fileModels[0])
+        // Second file
+        mesh = gltf.scene.clone()
+        fileModels.push(mesh)
+        scene.add(fileModels[1])
+        // Third file 
+        mesh = gltf.scene.clone()
+        mesh.translateX(7)
+        fileModels.push(mesh)
+        scene.add(fileModels[2])
+        // Fourth file 
+        mesh = gltf.scene.clone()
+        mesh.translateX(-14)
+        fileModels.push(mesh)
+        scene.add(fileModels[3])
+        // Fifth file 
+        mesh = gltf.scene.clone()
+        mesh.translateX(14)
+        fileModels.push(mesh)
+        scene.add(fileModels[4])
+    }
+)
 
 // Floor
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshMatcapMaterial({ matcap }))
@@ -241,6 +433,8 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+// Intersection
+let currentIntersect = null
 
 // Clock
 const clock = new THREE.Clock()
@@ -257,6 +451,85 @@ const tick = () => {
     for(const m of array){
         m.mesh.position.copy(m.body.position)
         m.mesh.quaternion.copy(m.body.quaternion)   
+    }
+
+    raycaster.setFromCamera(mouse, camera)
+    // Make the files look at you and grow if you hover them
+    if(fileModels){
+        let i = 0
+        // Raycaster 
+        fileModels.forEach(m => {
+            m.lookAt(camera.position)
+            // Checking if the object is hovered 
+            const intersect = raycaster.intersectObject(m)
+            if (intersect.length){ // If hovered, scale up the object and display the text
+                m.scale.set(2.5, 2.5, 2.5)
+                switch (i) {
+                    case 0:
+                        if (!scene.getObjectByName('firstText')){
+                            scene.add(texts[i].geo)
+                            texts[i].geo.position.copy(m.position)
+                            texts[i].geo.translateY(4)
+                        }
+                        break;
+                    case 1 :
+                        if (!scene.getObjectByName('secondText')){
+                            scene.add(texts[i].geo)
+                            texts[i].geo.position.copy(m.position)
+                            texts[i].geo.translateY(4)
+                        }
+                        break;
+                    case 2 :
+                        if (!scene.getObjectByName('thirdText')){
+                            scene.add(texts[i].geo)
+                            texts[i].geo.position.copy(m.position)
+                            texts[i].geo.translateY(4)
+                        }
+                        break;
+                    case 3 :
+                        if (!scene.getObjectByName('fourthText')){
+                            scene.add(texts[i].geo)
+                            texts[i].geo.position.copy(m.position)
+                            texts[i].geo.translateY(4)
+                        }
+                        break;
+                    case 4 :
+                        if (!scene.getObjectByName('fifthText')){
+                            scene.add(texts[i].geo)
+                            texts[i].geo.position.copy(m.position)
+                            texts[i].geo.translateY(4)
+                        }
+                        break;
+                }
+            } else {
+                m.scale.set(2, 2, 2)
+                scene.remove(texts[i].geo)
+            }
+            i++
+        });
+        
+    }
+
+    // Getting the objects hovered for click event
+    const interObj = []
+    if(fileModels){
+        let i = 0
+        fileModels.forEach(m => {
+            const intersect = raycaster.intersectObject(m)
+            if(intersect.length){
+                interObj.push({
+                    mesh: m,
+                    index: i
+                })
+            }
+            i++
+        })
+    }
+
+    if (interObj.length){
+        currentIntersect = interObj
+    } else {
+        currentIntersect = null
     }
 
     // Updating the controls
