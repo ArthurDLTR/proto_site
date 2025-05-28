@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0">
+        <title>Prix d'achat pour les fournisseurs</title>
+        <link rel="stylesheet" href="./altstyle.css">
+        <script src="altscript.js"></script>
+    </head>
+    <body>  
+        <div class="home-link">
+            <div class="burger">
+                <span class="first"></span>
+                <span class="second"></span>
+                <span class="third"></span>
+            </div>
+            <a href="/index.html">ECID SAS Chalicarne</a>
+            <a href="/import_poids_volume.html">Protocole poids et volume</a>
+            <a href="/import_prix_achat.html">Protocole fournisseur pour les prix d'achat</a>
+            <a href="/import_prix_fourn.html">Protocole import prix fournisseur dans Dolibarr</a>
+            <a href="/import_regles_remise.html">Protocole import règles de remise dans Dolibarr</a>
+            <a href="/inventaire_debut_annee.html">Inventaire de début d'année</a>
+            <a href="/protocole_creation_identifiant.html">Protocole de création d'identifiant pour le portail client</a>
+        </div>
+        <div class="lightdarkbutton">
+            <div class="container">
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="content">
+            <h1 class="title">Protocole pour la création d'identifiant pour le portail client</h1>
+            <p class="text">Le but de ce protocole est de créer un couple identifiant/mot de passe pour un client pour qu'il puisse passer des commandes en ligne et accéder à ces anciennes commandes, factures, etc...</p>
+            <!-- Création d'un contact -->
+            <h2 class="sub-title">Création d'un contact lié à un tiers</h2>
+            <p class="text">La première étape est d'aller sur la fiche Tiers du client concerné. Pour cet exemple, je choisis le Tiers <b>Atu SARL</b> :</p>
+            <img src="/img/protocole_creation_identifiant/1.png" alt="Fiche tiers">
+            <p class="text">Il peut être utile d'ajouter un tag client au Tiers s'il n'en a pas encore. Atu SARL est un transporteur.</p>
+            <p class="text">Il faut ensuite aller dans l'onglet <b>Contacts/Adresses</b> :</p>
+            <img src="/img/protocole_creation_identifiant/2.png" alt="Onglet Contacts/Adresses dans fiche Tiers">
+            <p class="text">Si comme dans la capture d'écran ci-dessus, le Tiers n'a pas de contact associé, il faut en créer un avec le bouton +.</p>
+            <p class="text">Si le Tiers en possède déjà un et que c'est ce contact qui utilisera le portail client, vous pouvez passer à l'étape <a href="#creation-id">Création du compte utilisateur</a>.</p>
+            <p class="text">Pour la création du Contact, il suffit de remplir le champ Nom et Prénom puis cliquer sur ajouter en bas de la page. Pour cet exemple, mon contact est <b>Atu Lenobli</b>, responsable d'achat chez Atu SARL : </p>
+            <img src="/img/protocole_creation_identifiant/4.png" alt="Formulaire de création de contact">
+            <p class="text">Il faut à présent aller sur la fiche Contact du contact fraîchement créé en cliquant sur son nom :</p>
+            <img src="/img/protocole_creation_identifiant/5.png" alt="Accès à la fiche contact">
+
+            <!-- Création du compte utilisateur depuis la fiche Contact -->
+            <h2 class="sub-title" id="creation-id">Création du compte utilisateur</h2>
+            <p class="text">Pour créer le compte utilisateur, il faut utiliser le bouton qui se trouve sur l'onglet <b>Contact/Adresse</b> d'un contact.</p>
+            <img src="/img/protocole_creation_identifiant/6.png" alt="Bouton pour créer un utilisateur">
+            <p class="text">Lorsque l'on clique sur le bouton, Dolibarr nous propose de choisir un identifiant et un mot de passe pour ce contact.</p>
+            <img src="/img/protocole_creation_identifiant/7.png" alt="Choix de l'identifiant et du mot de passe">
+            <p class="text">Il faut copier le mot de passe avant de valider la création du compte utilisateur car le mot de passe n'est plus visible par la suite mais peut être re-générer, il sera donc différent du précédent.</p>
+            <p class="text">Une fois l'utilisateur créé, il faut aller sur le profil utilisateur en cliquant sur son identifiant.</p>
+            <img src="/img/protocole_creation_identifiant/8.png" alt="Accès à la page de l'utilisateur">
+
+            <!-- Ajout des permissions pour accéder au portail client -->
+            <h2 class="sub-title">Ajout des permissions pour accéder au portail client</h2>
+            <p class="text">Maintenant que le contact a un identifiant utilisateur, il faut lui donner les permissions pour accéder au portail client uniquement.</p>
+            <p class="text">Pour cela, il faut aller dans l'onglet <b>Permissions</b> et cliquer sur <b>Aucun</b> dans la ligne <b>Module/Application</b> pour qu'il ne puisse pas accéder Dolibarr de la manière qu'un employé d'ECID :</p>
+            <img src="/img/protocole_creation_identifiant/9.png" alt="Retirer toutes les permissions à un utilisateur">
+            <p class="text">A présent, il faut descendre dans les permissions jusqu'à la section <b>Portail client</b> et cliquer sur les différentes options pour qu'il puisse accéder aux documents liés à son Tiers dans le portail client.</p>
+            <img src="/img/protocole_creation_identifiant/10.png" alt="Donner les permissions pour le portail client">
+            <p class="text">Maintenant, le contact peut se connecter avec son couple Identifiant/mot de passe au portail client.</p>
+
+            <!-- Communication de l'identifiant/mot de passe -->
+            <h2 class="sub-title">Communication de l'identifiant/mot de passe</h2>
+            <p class="text">En retournant sur la fiche utilisateur, si un mail est enregistré, il est possible d'envoyer un e-mail pour lui communiquer son couple identifiant/mot de passe.</p>
+            <img src="/img/protocole_creation_identifiant/11.png" alt="Bouton pour envoyer le mail">
+            <p class="text">Il existe un modèle d'e-mail intitulé <b>COMM_ID_MDP</b> où il suffit de remplir identifiant et mot de passe pour envoyer le mail à l'adresse enregistrée pour l'utilisateur.</p>
+            <img src="/img/protocole_creation_identifiant/12.png" alt="Modèle de mail">
+        </div>
+        <p class="text">Téléchargez ce document au format PDF : <a href="/doc/protocole_creation_identifiant.pdf" class="link">PDF</a></p>
+    </body>
+</html>
